@@ -1,3 +1,5 @@
+Click here https://mud-barge-6df.notion.site/Project-Solar-Motion-Light-1817578929b680738807cfb46f25ef1a?pvs=4
+
 Project Overview
 This repository contains resources for designing and implementing a solar-powered motion sensor light system. The project utilizes an ESP32 microcontroller to manage operations, ensuring energy efficiency and autonomous functionality. The system is entirely self-sustaining, powered by a solar panel, and designed for long-term operation without manual intervention.
 
