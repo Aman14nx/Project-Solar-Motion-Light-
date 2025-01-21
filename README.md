@@ -45,3 +45,6 @@ LDR Integration: Add ambient light detection for smarter operation.
 Remote Monitoring: Leverage ESP32’s Wi-Fi capabilities for system updates and alerts.
 Conclusion
 This project demonstrates a robust and sustainable lighting solution, powered entirely by renewable energy. With its autonomous design and potential for upgrades, it serves as a versatile system for various environments.
+
+
+i Will more modify it and uploade a better version 
