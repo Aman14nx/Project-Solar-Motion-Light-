@@ -1,4 +1,4 @@
-Link to my Notion page - <h3> 
+Link to my Notion page - <h3>https://mud-barge-6df.notion.site/Project-Solar-Motion-Light-1817578929b680738807cfb46f25ef1a?pvs=4 </h3>
 # ESP32 Solar Motion Light
 
 A solar-powered smart motion light built using an ESP32 microcontroller, PIR motion sensor, rechargeable battery system, and custom 3D-printed enclosure.
