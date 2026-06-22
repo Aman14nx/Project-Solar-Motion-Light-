@@ -1,50 +1,44 @@
-Click here https://mud-barge-6df.notion.site/Project-Solar-Motion-Light-1817578929b680738807cfb46f25ef1a?pvs=4
+Link to my Notion page - <h3> 
+# ESP32 Solar Motion Light
 
-Project Overview
-This repository contains resources for designing and implementing a solar-powered motion sensor light system. The project utilizes an ESP32 microcontroller to manage operations, ensuring energy efficiency and autonomous functionality. The system is entirely self-sustaining, powered by a solar panel, and designed for long-term operation without manual intervention.
+A solar-powered smart motion light built using an ESP32 microcontroller, PIR motion sensor, rechargeable battery system, and custom 3D-printed enclosure.
 
-Contents
-Detailed Documentation:
+The system is designed to operate autonomously using solar energy while maximizing battery life through ESP32 Deep Sleep functionality. When motion is detected, the ESP32 wakes up, activates the flashlight for a configurable period, and then returns to ultra-low-power sleep mode.
 
-Step-by-step explanation of the project design and system functionality.
-Descriptions of all components and their roles in the system.
-Assembly instructions and usage guidelines.
-3D-Printed Files:
+This project combines embedded systems, power management, 3D design, and renewable energy technologies into a practical outdoor lighting solution.
 
-STL files for all enclosures, including the main body, back cover, and bottom housing.
-System Design Visuals:
+---
 
-Exploded view diagrams and wiring illustrations.
-Components Used
-ESP32 Microcontroller: Manages sensor inputs, controls the light, and enters deep sleep for energy efficiency.
-PIR Motion Sensor (HC-SR501): Detects motion to trigger the flashlight.
-Solar Panel: Harvests energy to charge the battery during the day.
-Lithium Rechargeable Battery: Stores energy for nighttime operation.
-Boost Converter & Voltage Regulator: Provide stable 5V and 3.3V power for the sensors and ESP32.
-NPN Transistor: Acts as a switch to control the flashlight.
-Flashlight: The light source triggered by motion.
-3D-Printed Files
-This repository includes STL files for the following components:
+## Features
 
-Main Body: Houses the solar panel, cables, PIR sensor, and mount.
-Back Cover: Secures the battery holder, boost converter, and voltage regulator.
-Bottom Enclosure: Protects the flashlight and ESP32 microcontroller.
-How to Use
-Download STL Files:
-Files are organized by purpose: MainBody.stl, BackCover.stl, BottomEnclosure.stl.
-Print Settings:
-Material: PLA or PETG.
-Layer height: 0.2 mm.
-Infill: 20-40%.
-Assembly Instructions:
-Assemble all components as per the provided diagrams and instructions.
-Ensure secure connections and proper wiring.
-Future Enhancements
-Custom PCB Design: Consolidate components for a cleaner setup.
-LDR Integration: Add ambient light detection for smarter operation.
-Remote Monitoring: Leverage ESP32’s Wi-Fi capabilities for system updates and alerts.
-Conclusion
-This project demonstrates a robust and sustainable lighting solution, powered entirely by renewable energy. With its autonomous design and potential for upgrades, it serves as a versatile system for various environments.
+### Motion Detection
+- HC-SR501 PIR motion sensor
+- Detects nearby movement
+- Instantly wakes the ESP32 from Deep Sleep
 
+### Ultra Low Power Design
+- ESP32 Deep Sleep mode
+- RTC GPIO wake-up support
+- Timer-based periodic wake checks
+- Optimized for long-term battery operation
 
-i Will more modify it and uploade a better version 
+### Solar Powered
+- Solar panel charging system
+- Rechargeable lithium battery
+- Fully autonomous operation
+- No external power source required
+
+### Smart Lighting
+- Automatically activates when motion is detected
+- Configurable light-on duration
+- Automatic shutdown after timeout
+
+### Custom Enclosure
+- Fully 3D printed housing
+- Weather-resistant design
+- Separate compartments for electronics and battery
+- Designed for outdoor installation
+
+---
+
+## System Architecture
