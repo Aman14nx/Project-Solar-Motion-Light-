@@ -1,0 +1,89 @@
+#include <Arduino.h>
+
+// ==========================================
+// PIN CONFIGURATIONS
+// ==========================================
+// Use a RTC (Real-Time Clock) capable GPIO pin for waking up from Deep Sleep
+// GPIO 33 is an excellent choice for RTC wakeups on ESP32 development boards.
+const gpio_num_t PIR_PIN = GPIO_NUM_33; 
+
+// Pin controlling the NPN Transistor base resistor to switch the Flashlight
+const int FLASHLIGHT_PIN = 25; 
+
+// ==========================================
+// SYSTEM TIMER SETTINGS
+// ==========================================
+// Duration the flashlight remains ON when motion is detected (in milliseconds)
+const unsigned long LIGHT_ON_DURATION = 15000; // 15 seconds
+
+// Optional timeout wake up: If no motion occurs, wake up every 4 hours 
+// to perform a system check, or process future Wi-Fi telemetry.
+const uint64_t TIME_TO_SLEEP_HOURS = 4;
+const uint64_t uS_TO_S_FACTOR = 1000000; // Conversion factor for micro seconds to seconds
+
+void goToDeepSleep() {
+  Serial.println("Preparing for Deep Sleep...");
+  
+  // 1. Configure PIR sensor to wake up the ESP32 when it goes HIGH (1)
+  esp_sleep_enable_ext0_wakeup(PIR_PIN, 1);
+  
+  // 2. Configure optional timer fallback wakeup
+  esp_sleep_enable_timer_wakeup(TIME_TO_SLEEP_HOURS * 3600 * uS_TO_S_FACTOR);
+  
+  Serial.println("Entering Deep Sleep mode now.");
+  Serial.flush(); 
+  
+  // 3. Power down into Deep Sleep mode
+  esp_deep_sleep_start();
+}
+
+void setup() {
+  // Initialize Serial Communication for debugging
+  Serial.begin(115200);
+  delay(500); // Give serial monitor time to connect
+  Serial.println("\n--- Solar Motion-Light System Initialized ---");
+
+  // Configure Flashlight control pin as OUTPUT
+  pinMode(FLASHLIGHT_PIN, OUTPUT);
+  digitalWrite(FLASHLIGHT_PIN, LOW); // Ensure it starts OFF
+
+  // Determine what caused the ESP32 to wake up
+  esp_sleep_wakeup_cause_t wakeup_reason = esp_sleep_get_wakeup_cause();
+
+  switch(wakeup_reason) {
+    case ESP_SLEEP_WAKEUP_EXT0:
+      Serial.println("Wakeup Reason: Motion detected by PIR Sensor!");
+      
+      // Turn on the Flashlight via NPN Transistor
+      Serial.println("Activating Flashlight...");
+      digitalWrite(FLASHLIGHT_PIN, HIGH);
+      
+      // Keep it on for the specified operational window
+      delay(LIGHT_ON_DURATION);
+      
+      // Turn off the Flashlight
+      digitalWrite(FLASHLIGHT_PIN, LOW);
+      Serial.println("Flashlight Deactivated.");
+      break;
+
+    case ESP_SLEEP_WAKEUP_TIMER:
+      Serial.println("Wakeup Reason: Periodic timer check-in (No motion).");
+      // Add any periodic tracking/battery state testing logic here if needed
+      break;
+
+    default:
+      Serial.println("Wakeup Reason: Hard reset or initial power-up.");
+      // Allow the PIR sensor 10-20 seconds to stabilize its IR profile field on fresh boot
+      Serial.println("Allowing PIR Sensor to stabilize warm-up profile...");
+      delay(15000); 
+      break;
+  }
+
+  // System completed its tasks for this wake cycle; go back to sleep instantly
+  goToDeepSleep();
+}
+
+void loop() {
+  // This block remains completely empty. Because of Deep Sleep execution architectures,
+  // the program resets into setup() upon hardware interrupt wakeups.
+}
